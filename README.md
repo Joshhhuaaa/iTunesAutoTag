@@ -14,12 +14,11 @@ For qaac to function properly, the following files from iTunes are required:
 - libicuuc.dll
 - objc.dll
 
-These files are necessary to use iTunes AutoTag. However, they are not included in the source. If working with the source, you can obtain these files from the releases or an iTunes installation.
+These files are necessary for iTunes AutoTag and are included in the source and releases.
 
 # Usage
 - Place the FLAC files you want to convert and tag into the "FLAC" folder located in the root directory alongside the executable.
 - Run the executable: `iTunesAutoTag.exe`
-
 
 ## Featured Artists
 
