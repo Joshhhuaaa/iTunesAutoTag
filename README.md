@@ -38,7 +38,7 @@ FeaturedArtistsTagPreference = None
 ```
 
 If `FLAC` and `ALAC` paths are unspecified, the script will default to using the main directory folders.
-If `FeaturedArtistsTagPreference` is unspecified, the script will ask for your preference prior to starting.
+If `FeaturedArtistsTagPreference` is unspecified, the script will ask for your preference prior to converting and tagging.
 
 # Metadata Tags
 ## Featured Artists
