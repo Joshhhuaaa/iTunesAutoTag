@@ -1,8 +1,8 @@
 # iTunesAutoTag
-iTunesAutoTag simplifies the process of converting FLAC music to Apple's ALAC format, which can be imported into iTunes. Additionally, it automatically adjusts your song metadata, such as artists and genres, matching iTunes's standards.
+iTunes AutoTag simplifies the process of converting FLAC music to Apple's ALAC format, which can be imported into iTunes. Additionally, it automatically adjusts your song metadata, such as artists and genres, matching iTunes's standards.
 
 # Dependencies
-iTunesAutoTag relies on [qaac](https://github.com/nu774/qaac) for converting audio from FLAC to ALAC.
+iTunes AutoTag relies on [qaac](https://github.com/nu774/qaac) for converting audio from FLAC to ALAC.
 
 For qaac to function properly, the following files from iTunes are required:
 - ASL.dll
@@ -14,11 +14,11 @@ For qaac to function properly, the following files from iTunes are required:
 - libicuuc.dll
 - objc.dll
 
-These files are necessary to use iTunesAutoTag. However, they are not included in the source. If working with the source, you can obtain these files from the releases or an iTunes installation.
+These files are necessary to use iTunes AutoTag. However, they are not included in the source. If working with the source, you can obtain these files from the releases or an iTunes installation.
 
 # Usage
 - Place the FLAC files you want to convert and tag into the "FLAC" folder located in the root directory alongside the executable.
-- Run the executable: `iTunes-AutoTag.exe`
+- Run the executable: `iTunesAutoTag.exe`
 
 
 ## Featured Artists
