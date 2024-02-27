@@ -3,13 +3,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>8d927829-0e08-4445-8c1d-ecab68acb206</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
-    <StartupFile>iTunes_AutoTag.py</StartupFile>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>iTunesAutoTag.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>iTunes-AutoTag</Name>
+    <Name>iTunesAutoTag</Name>
     <RootNamespace>iTunes-AutoTag</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -21,7 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="iTunes_AutoTag.py" />
+    <Compile Include="iTunesAutoTag.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

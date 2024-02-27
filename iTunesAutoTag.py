@@ -5,7 +5,7 @@ import re
 import sys
 import chardet
 
-print("--- iTunes AutoTag: Convert FLAC to ALAC and automate tags for iTunes ---\n")
+print("--- iTunesAutoTag: Convert FLAC to ALAC and automate tags for iTunes ---\n")
 
 # Directory to script (python/exe)
 # script_directory = os.path.dirname(os.path.realpath(__file__))
