@@ -1,6 +1,8 @@
 # <img src="icon.ico" width="32"> iTunes AutoTag
 iTunes AutoTag is a simple command line script that converts FLAC music files to Apple's ALAC format and automatically sets up the metadata to iTunes convention.
 
+**This script is currently experimental. It is recommended to create backups before converting and tagging any audio files.**
+
 # Dependencies
 iTunes AutoTag uses [qaac](https://github.com/nu774/qaac) for converting audio from FLAC to ALAC.
 
