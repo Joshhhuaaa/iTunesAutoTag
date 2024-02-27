@@ -103,7 +103,7 @@ def convert_flac_to_alac_with_tagging(flac_directory, alac_directory, qaac_path,
                 print(f"Updated GENRE tag for {os.path.basename(alac_file_path)}.")
 
 
-            # Modify tags based on user preference
+            # Tags based on user preference
             if artists and title:
                 main_artist = artists[0]
                 if len(artists) > 1:
@@ -142,19 +142,16 @@ def convert_flac_to_alac_with_tagging(flac_directory, alac_directory, qaac_path,
     print(f"====================\nSuccessfully converted and tagged {converted_count} audio file(s).")
     
 def cleanup_temp_files(directory):
-    # Get all files in the directory
     files = glob.glob(os.path.join(directory, "*-data-*.m4a"))
     
-    # Iterate over the files
+    
     for file_path in files:
         try:
-            # Try to remove the file
             os.remove(file_path)
-            print(f"\nRemoved temporary file: {file_path}")
+            print(f"\nRemoved temp file: {file_path}")
         except Exception as e:
-            print(f"\nFailed to remove temporary file: {file_path}. Error: {e}")
+            print(f"\nFailed to remove temp file: {file_path}. Error: {e}")
 
-# Call the function to convert FLAC to ALAC and do tagging
 while True:
     placement_preference = input("Include featured artists in the 'TITLE' tag like iTunes or use 'ARTIST' tag instead?\nEnter your preferred tag (artist/title): ").lower()
     if placement_preference in ["artist", "title"]:
@@ -163,8 +160,8 @@ while True:
         print("\nInvalid tag. Please enter 'artist' or 'title'.")
 convert_flac_to_alac_with_tagging(flac_directory, alac_directory, qaac_path, metaflac_path, atomicparsley_path, placement_preference)
 
-# Call the cleanup function after the conversion and tagging
+# Cleans missed temporary files from AtomicParsley 
 cleanup_temp_files(alac_directory)
 
-# Prompt the user to press any key before closing the window
+
 input("\nPress Enter to exit.")
