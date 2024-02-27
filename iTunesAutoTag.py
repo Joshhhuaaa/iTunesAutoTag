@@ -4,27 +4,28 @@ import glob
 import re
 import sys
 import chardet
+import configparser
 
-print("--- iTunesAutoTag: Convert FLAC to ALAC and automate tags for iTunes ---\n")
+print("--- iTunes AutoTag: Convert FLAC to ALAC and automate tags for iTunes ---\n")
 
-# Directory to script (python/exe)
-# script_directory = os.path.dirname(os.path.realpath(__file__))
-script_directory = os.path.dirname(sys.executable)
+# Path to script (py/exe)
+# script_path = os.path.dirname(os.path.realpath(__file__))
+script_path = os.path.dirname(sys.executable)
 
-# Directory to FLAC music
-flac_directory = os.path.join(script_directory, "FLAC")
+# Path to FLAC music
+flac_path = os.path.join(script_path, "FLAC")
 
-# Directory to ALAC music
-alac_directory = os.path.join(script_directory, "ALAC")
+# Path to ALAC music
+alac_path = os.path.join(script_path, "ALAC")
 
 # Path to QAAC
-qaac_path = os.path.join(script_directory, "qaac64.exe")
+qaac_path = os.path.join(script_path, "qaac64.exe")
 
 # Path to MetaFlac
-metaflac_path = os.path.join(script_directory, "metaflac.exe")
+metaflac_path = os.path.join(script_path, "metaflac.exe")
 
 # Path to AtomicParsley
-atomicparsley_path = os.path.join(script_directory, "AtomicParsley.exe")
+atomicparsley_path = os.path.join(script_path, "AtomicParsley.exe")
 
 def get_artists_from_flac(flac_file_path, metaflac_path):
     artists = []
@@ -44,7 +45,7 @@ def get_artists_from_flac(flac_file_path, metaflac_path):
 
 def get_title_from_alac(alac_file_path, atomicparsley_path):
     try:
-        # Getting song title from ALAC file using AtomicParsley
+        # Getting title from ALAC file using AtomicParsley
         output = subprocess.check_output([atomicparsley_path, alac_file_path, "-t"], stderr=subprocess.DEVNULL)
         encoding = chardet.detect(output)['encoding']
         output = output.decode(encoding).strip()
@@ -59,7 +60,7 @@ def get_title_from_alac(alac_file_path, atomicparsley_path):
 
 def get_genre_from_alac(alac_file_path, atomicparsley_path):
     try:
-        # Getting song genre from ALAC file using AtomicParsley
+        # Getting genre from ALAC file using AtomicParsley
         output = subprocess.check_output([atomicparsley_path, alac_file_path, "-t"], stderr=subprocess.DEVNULL)
         encoding = chardet.detect(output)['encoding']
         output = output.decode(encoding).strip()
@@ -72,14 +73,14 @@ def get_genre_from_alac(alac_file_path, atomicparsley_path):
         print(f"\nFailed to retrieve genre from {alac_file_path}.")
     return None
 
-def convert_flac_to_alac_with_tagging(flac_directory, alac_directory, qaac_path, metaflac_path, atomicparsley_path, tag_preference):
-    flac_files = glob.glob(os.path.join(flac_directory, "*.flac"))
+def convert_flac_to_alac_with_tagging(flac_path, alac_path, qaac_path, metaflac_path, atomicparsley_path, tag_preference):
+    flac_files = glob.glob(os.path.join(flac_path, "*.flac"))
     converted_count = 0
 
     for flac_file in flac_files:
         if os.path.exists(flac_file):
             song_file_name = os.path.splitext(os.path.basename(flac_file))[0]
-            alac_file_path = os.path.join(alac_directory, f"{song_file_name}.m4a")
+            alac_file_path = os.path.join(alac_path, f"{song_file_name}.m4a")
 
             # Convert FLAC to ALAC
             subprocess.run([qaac_path, "--alac", "--threading", "--copy-artwork", "-i", flac_file, "-o", alac_file_path], stderr=subprocess.DEVNULL)
@@ -145,7 +146,6 @@ def convert_flac_to_alac_with_tagging(flac_directory, alac_directory, qaac_path,
 def cleanup_temp_files(directory):
     files = glob.glob(os.path.join(directory, "*-data-*.m4a"))
     
-    
     for file_path in files:
         try:
             os.remove(file_path)
@@ -153,16 +153,31 @@ def cleanup_temp_files(directory):
         except Exception as e:
             print(f"\nFailed to remove temp file: {file_path}. Error: {e}")
 
-while True:
-    tag_preference = input("Include featured artists in the 'TITLE' tag like iTunes or use 'ARTIST' tag instead?\nEnter your preferred tag (artist/title): ").lower()
-    if tag_preference in ["artist", "title"]:
-        break
-    else:
-        print("\nInvalid tag. Please enter 'artist' or 'title'.")
-convert_flac_to_alac_with_tagging(flac_directory, alac_directory, qaac_path, metaflac_path, atomicparsley_path, tag_preference)
+# Config
+config = configparser.ConfigParser()
+config.read('config.ini')
 
+try:
+    # If config is found, use user values
+    flac_path = os.path.join(script_path, config.get('Paths', 'FLAC'))
+    alac_path = os.path.join(script_path, config.get('Paths', 'ALAC'))
+    tag_preference = config.get('Preferences', 'FeaturedArtistsTagPreference').lower()
+except configparser.NoSectionError:
+    # If the config is not found, use default values
+    flac_path = os.path.join(script_path, "FLAC")
+    alac_path = os.path.join(script_path, "ALAC")
+    tag_preference = None
+    
+if tag_preference not in ["artist", "title"]:
+    while True:
+        tag_preference = input("Include featured artists in the 'TITLE' tag like iTunes or use 'ARTIST' tag instead?\nEnter your preferred tag (artist/title): ").lower()
+        if tag_preference in ["artist", "title"]:
+            break
+        else:
+            print("\nInvalid tag. Enter 'artist' or 'title'.")
+            
+convert_flac_to_alac_with_tagging(flac_path, alac_path, qaac_path, metaflac_path, atomicparsley_path, tag_preference)
 
-cleanup_temp_files(alac_directory)
-
+cleanup_temp_files(alac_path)
 
 input("\nPress Enter to exit.")
