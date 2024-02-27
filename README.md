@@ -14,7 +14,7 @@ For qaac to function properly, the following files from iTunes are required:
 - libicuuc.dll
 - objc.dll
 
-These files are are included in the source and releases.
+These files are included in both the source and the releases, based on iTunes 12.13.1.
 
 # Usage
 - Place any FLAC files you want to convert and tag into the "FLAC" folder located in the main directory alongside the executable.
