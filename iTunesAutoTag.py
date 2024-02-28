@@ -8,9 +8,11 @@ import configparser
 
 print("--- iTunes AutoTag: Convert FLAC to ALAC and automate tags for iTunes ---\n")
 
-# Path to script (py/exe)
-# script_path = os.path.dirname(os.path.realpath(__file__))
-script_path = os.path.dirname(sys.executable)
+# Path to script
+if getattr(sys, 'frozen', False):
+    script_path = os.path.dirname(sys.executable)
+else:
+    script_path = os.path.dirname(os.path.realpath(__file__))
 
 # Path to FLAC music
 flac_path = os.path.join(script_path, "FLAC")
@@ -154,6 +156,7 @@ def cleanup_temp_files(directory):
             print(f"\nFailed to remove temp file: {file_path}. Error: {e}")
 
 # Config
+config_path = os.path.join(script_path, 'config.ini')            
 config = configparser.ConfigParser()
 config.read('config.ini')
 
